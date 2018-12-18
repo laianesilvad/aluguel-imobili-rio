@@ -1,0 +1,69 @@
+create database imobiliaria;
+use imobiliaria;
+
+create table endereco(
+id_endereco int not null,
+pais varchar(30) not null,
+estado varchar(2) not null,
+cidade varchar(30) not null,
+cep varchar(10) not null,
+bairro varchar(30) not null,
+rua varchar(30) not null,
+numero int not null,
+primary key(id_endereco)
+);
+
+create table cliente(
+id_cliente int not null,
+nome varchar(50) not null,
+rg varchar(15) not null,
+cpf varchar(14) not null,
+data_nasc date not null,
+telefone varchar(14) not null,
+imail varchar(30) not null,
+id_endereco int not null,
+primary key(id_cliente),
+foreign key(id_endereco) references endereco(id_endereco)
+);
+
+create table funcionario(
+id_funcionario int not null,
+nome varchar(50) not null,
+rg varchar(15) not null,
+cpf varchar(14) not null,
+telefone varchar(14) not null,
+data_nasc date not null,
+imail varchar(30) not null,
+id_endereco int not null,
+primary key(id_funcionario),
+foreign key(id_endereco) references endereco(id_endereco)
+);
+
+create table tipo_imovel(
+id_tipoimovel int not null,
+descricao varchar(200) not null,
+primary key(id_tipoimovel)
+);
+
+create table imovel(
+id_imovel int not null,
+finalidade varchar(6) not null,
+valor float(10,2) not null,
+qnt_quartos int,
+qnt_banheiro int,
+area_construida double not null,
+area_total double not null,
+qnt_saladeestar int,
+qnt_salajantar int,
+qnt_cozinha int,
+descricao varchar(200) not null,
+id_tipoimovel int not null,
+id_endereco int not null,
+id_cliente int not null,
+id_funcionario int not null,
+primary key(id_imovel),
+foreign key(id_tipoimovel) references tipo_imovel(id_tipoimovel),
+foreign key(id_endereco) references endereco(id_endereco),
+foreign key(id_funcionario) references funcionario(id_funcionario),
+foreign key(id_cliente) references cliente(id_cliente)
+);
